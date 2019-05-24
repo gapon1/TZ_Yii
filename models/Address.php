@@ -33,9 +33,9 @@ class Address extends \yii\db\ActiveRecord
         return [
             [['post_index', 'country', 'city', 'street', 'house_number'], 'required'],
             [['post_index'], 'number', 'min' => 4],
-            [['country'],'filter', 'filter' => 'strtoupper', ],
+            [['country'], 'filter', 'filter' => 'strtoupper',],
             [['country'], 'string', 'max' => 2],
-            [['house_number', 'office_number'],'string', 'max' => 6],
+            [['house_number', 'office_number'], 'string', 'max' => 6],
             [['country', 'city', 'street', 'house_number', 'office_number'], 'string', 'max' => 255],
         ];
     }
@@ -53,6 +53,25 @@ class Address extends \yii\db\ActiveRecord
             'street' => 'Street',
             'house_number' => 'House Number',
             'office_number' => 'Office Number',
+            'user_id' => 'User Id',
+
+
         ];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function saveUser($user_id)
+    {
+        $user = User::findOne($user_id);
+
+        if ($user != null) {
+            $this->link('user', $user);
+            return true;
+        }
+
     }
 }

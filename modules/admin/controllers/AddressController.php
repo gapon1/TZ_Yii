@@ -39,7 +39,7 @@ class AddressController extends Controller
         $searchModel = new AddressSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $dataProvider->pagination->pageSize = 2;
+        $dataProvider->pagination->pageSize = 5;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -55,6 +55,7 @@ class AddressController extends Controller
      */
     public function actionView($id)
     {
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -126,5 +127,16 @@ class AddressController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionSetUser($id)
+    {
+        $user = $this->findModel($id);
+
+        var_dump($user->user->name);
+
+//        echo $address->user->name;
+//        $address->user->id;
+
     }
 }
