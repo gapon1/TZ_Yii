@@ -36,9 +36,10 @@ class AddressController extends Controller
      */
     public function actionIndex()
     {
-
-        $searchModel = new Address();
+        $searchModel = new AddressSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $dataProvider->pagination->pageSize = 2;
 
         return $this->render('index', [
             'searchModel' => $searchModel,

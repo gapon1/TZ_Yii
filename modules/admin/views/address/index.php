@@ -20,15 +20,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?php
-    foreach ($models as $model) {
-        print_r( $models);
-    }
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
 
-    // display pagination
-    echo \yii\widgets\LinkPager::widget([
-        'pagination' => $pages,
-    ]);
+            'post_index',
+            'country',
+            'city',
+            'street',
+            'house_number',
+            'office_number',
 
-    ?>
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+
+
 </div>
