@@ -14,10 +14,7 @@ const NO_INFO = 'нет информации';
 
 <div class="user-form">
 
-
-
     <?php $form2 = ActiveForm::begin([]); ?>
-
 
     <?= $form2->field($model, 'login')->textInput(['maxlength' => true]) ?>
 
@@ -44,6 +41,8 @@ const NO_INFO = 'нет информации';
     <?= $form2->field($model2, 'house_number')->textInput(['maxlength' => true]) ?>
 
     <?= $form2->field($model2, 'office_number')->textInput(['maxlength' => true]) ?>
+
+    <?= $form2->field($model2, 'user_id')->textInput(['value' => $userId])->label(false); ?>
 
 
     <div class="form-group">

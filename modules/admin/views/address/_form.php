@@ -24,6 +24,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'office_number')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'user_id')->textInput() ?>
+
 
 
     <div class="form-group">

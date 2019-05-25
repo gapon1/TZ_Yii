@@ -26,9 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-
-
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -43,12 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-
-<?php foreach ($rows as $row){}?>
-
+    <?php foreach ($address as $addres): ?>
 
     <?= DetailView::widget([
-        'model' => $row,
+        'model' => $addres,
         'attributes' => [
             'post_index',
             'country',
@@ -56,9 +51,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'street',
             'house_number',
             'office_number',
+            'user_id'
         ],
     ]) ?>
 
+    <?php endforeach;?>
 
 
 </div>

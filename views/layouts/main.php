@@ -41,7 +41,6 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'User', 'url' => ['/admin/user']],
             ['label' => 'Address', 'url' => ['/admin/address']],
-            ['label' => 'All User info', 'url' => ['admin/user/view-all']],
         ],
     ]);
     NavBar::end();

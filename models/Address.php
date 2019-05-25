@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "address".
@@ -14,6 +15,7 @@ use Yii;
  * @property string $street
  * @property string $house_number
  * @property string $office_number
+ * @property string $user_id
  */
 class Address extends \yii\db\ActiveRecord
 {
@@ -36,7 +38,7 @@ class Address extends \yii\db\ActiveRecord
             [['country'], 'filter', 'filter' => 'strtoupper',],
             [['country'], 'string', 'max' => 2],
             [['house_number', 'office_number'], 'string', 'max' => 6],
-            [['country', 'city', 'street', 'house_number', 'office_number'], 'string', 'max' => 255],
+            [['country', 'city', 'street', 'house_number', 'office_number', 'user_id'], 'string', 'max' => 255],
         ];
     }
 
@@ -55,7 +57,6 @@ class Address extends \yii\db\ActiveRecord
             'office_number' => 'Office Number',
             'user_id' => 'User Id',
 
-
         ];
     }
 
@@ -64,14 +65,30 @@ class Address extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    public function saveUser($user_id)
+
+    public static function gteAddres($id)
     {
-        $user = User::findOne($user_id);
+        $query = new Query();
 
-        if ($user != null) {
-            $this->link('user', $user);
-            return true;
-        }
+        $query->select('country, user_id, post_index, city, street, house_number, office_number, user.name, user.login')
+            ->from('address ad')
+            ->join('INNER JOIN', 'user', 'user.id = ad.user_id')
+            ->andWhere('ad.user_id = ' . $id);
 
+        return $rows = $query->all();
+
+    }
+
+    public static function getUserId()
+    {
+        $query = new Query();
+        $query->select('id')
+            ->from('user us');
+
+        $rows = $query->all();
+        $getId = array_rand($rows);
+        ($getId == 0) ? $getId = 1 : false;
+
+        return $getId;
     }
 }

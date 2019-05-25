@@ -62,24 +62,6 @@ class UserController extends Controller
         ]);
     }
 
-    public function actionViewAll($id)
-    {
-
-        $query = new Query();
-
-        $query->select('country,  post_index, city, street, house_number, office_number, user.name, user.login')
-            ->from('address ad')
-            ->join('INNER JOIN', 'user', 'user.id = ad.user_id')
-            ->andWhere('ad.id = ' . $id);
-
-        $rows = $query->all();
-
-        return $this->render('viewall', [
-            'model' => $this->findModel($id),
-            'rows' => $rows,
-        ]);
-    }
-
     /**
      * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -150,23 +132,35 @@ class UserController extends Controller
     }
 
 
+    public function actionViewAll($id)
+    {
+        $address = Address::gteAddres($id);
+
+        return $this->render('viewall', [
+            'model' => $this->findModel($id),
+            'address' => $address,
+        ]);
+    }
+
     public function actionCreateUserAddress()
     {
-
         $model = new User();
         $model2 = new Address();
+        $userId = Address::getUserId();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['user/view-all', 'id' => $model->id]);
         }
         if ($model2->load(Yii::$app->request->post()) && $model2->save()) {
-            return $this->redirect(['user/view-all', 'id' => $model2->id]);
+            return $this->redirect(['user/']);
         }
 
         return $this->render('useraddress', [
             'model' => $model,
             'model2' => $model2,
+            'userId' => $userId,
         ]);
 
     }
+
 }
